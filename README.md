@@ -1,50 +1,132 @@
-# Welcome to your Expo app 👋
+# Gym Timer
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Gym Timer is a local-first workout planner, set tracker, rest timer, and exercise-progress app built with React Native and Expo SDK 54.
 
-## Get started
+It supports both structured workout plans and spontaneous workouts recorded one set at a time. All workout data is stored on the device and can be exported as a JSON backup.
 
-1. Install dependencies
+## Features
 
-   ```bash
-   npm install
-   ```
+- Create, edit, duplicate, reorder, and delete workout plans, exercises, and sets.
+- Run planned workouts with target and actual weight/repetition tracking.
+- Show or hide the previous session's performance during a workout.
+- Record an unplanned workout without creating a fixed plan first.
+- Choose a configured workout day or enter a one-off custom day.
+- Customize recorder days and exercise shortcuts from Settings.
+- Use countdown rest timers for planned workouts and count-up rest timers while recording.
+- Pause, resume, recover, and discard active workouts.
+- Track personal records and volume separately for every exercise.
+- Review weekly exercise volume, workout history, and detailed set results.
+- Configure sound, vibration, notifications, keep-awake behavior, and visual themes.
+- Export and import plans, history, settings, and recorder configuration as JSON.
 
-2. Start the app
+## Technology
 
-   ```bash
-   npx expo start
-   ```
+- Expo SDK 54 / React Native 0.81 / React 19.1
+- Expo Router
+- TypeScript in strict mode
+- Zustand
+- AsyncStorage
+- Zod
+- Expo Notifications, Audio, Haptics, and Keep Awake
+- Node's built-in test runner
 
-In the output, you'll find options to open the app in a
+## Requirements
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Node.js 20.19 or newer
+- npm
+- Expo Go with SDK 54 support, or an Android/iOS development environment
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Getting started
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```powershell
+npm install
+npx expo start --go
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Scan the QR code with Expo Go while the phone and development computer are on the same network. Press `E` in Expo's terminal UI to display the QR code again.
 
-## Learn more
+On Windows systems that block PowerShell wrapper scripts, use:
 
-To learn more about developing your project with Expo, look at the following resources:
+```powershell
+npm.cmd install
+npx.cmd expo start --go
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+For restrictive networks, Expo's tunnel mode is also available:
 
-## Join the community
+```powershell
+npx expo start --go --tunnel
+```
 
-Join our community of developers creating universal apps.
+## Useful commands
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+| Command | Purpose |
+| --- | --- |
+| `npm start` | Start the Expo development server |
+| `npm run android` | Start Expo and open Android |
+| `npm run ios` | Start Expo and open iOS |
+| `npm run web` | Start the web app |
+| `npm run typecheck` | Run the TypeScript compiler without emitting files |
+| `npm run lint` | Run Expo's ESLint configuration |
+| `npm test` | Run the unit test suite |
+| `npx expo export --platform android` | Verify a production Android bundle |
+
+## App workflow
+
+### Planned workout
+
+1. Open **Plans** and create or edit a plan.
+2. Add exercises and individual warm-up or working sets.
+3. Start the plan from **Home**.
+4. Record actual weight and repetitions for each set.
+5. Use the countdown rest timer before continuing.
+
+### Record workout
+
+1. Select **Record workout** on **Home**.
+2. Choose a configured day or enter a custom day name.
+3. Select an exercise, enter weight and repetitions, and record the set.
+4. Let the count-up rest timer run until ready, then record the next set.
+5. Finish the workout to save it to history and exercise progress.
+
+Recorder shortcuts can be managed under **Settings → Workout recorder**. Removing a shortcut does not alter existing workout history.
+
+## Data and backups
+
+Plans, active sessions, completed history, and settings are validated and stored locally with AsyncStorage. The app does not require an account or backend.
+
+Use **Settings → Advanced settings** to export or import a JSON backup. Keep exported backups somewhere outside the device if the history is important.
+
+## Project structure
+
+```text
+app/                 Expo Router screens
+src/components/      App-specific UI and forms
+src/data/            Seed plans and recorder defaults
+src/hooks/           Hydration and timer hooks
+src/models/          TypeScript data models
+src/services/        Persistence, notifications, feedback, and workout logic
+src/store/           Zustand stores
+src/utils/           Analytics, summaries, routes, and helpers
+src/validation/      Zod schemas
+tests/               Unit tests
+different themes/    Original visual-design references
+```
+
+The original implementation brief is retained in [README_DEVELOPMENT.md](README_DEVELOPMENT.md). The checked-in [Expo SDK reference](Expo%20SDK%20reference.md) documents the exact Expo version targeted by this repository.
+
+## Current limitations
+
+- Weight is recorded in kilograms.
+- Data is local unless manually exported.
+- There are no accounts, cloud synchronization, social features, or wearable integrations.
+
+## Verification
+
+Before committing changes, run:
+
+```powershell
+npm run typecheck
+npm run lint
+npm test
+```
